@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import java.util.Random;
-
+import java.util.InputMismatchException;
 /** A number guessing game. */
 // users name -> user input
 // guess number -> user input
@@ -25,32 +25,39 @@ public class Game {
     Random rand = new Random();
 
     int number = rand.nextInt(101);
+    System.out.println(number);
+
+    boolean guessIsCorrect = false;
 
     System.out.println("Enter your guess:");
-    String user_guess = input.nextLine();
-    int user_guess_int = Integer.parseInt(user_guess);
 
+    while (!guessIsCorrect) {
+    
+    try {
+      String user_guess = input.nextLine();
+      int user_guess_int = Integer.parseInt(user_guess);
+      
+      while (user_guess_int != number) { 
+        amountOfGuesses++;
 
-    // while user_guess != number:
-        // increment amountOfGuesses
-        // display hints based on whether or not the users guess is higher or lower
-        // than the number
-        
-    while (user_guess_int != number) {
-      amountOfGuesses++;
+        if (user_guess_int > number) {
+          System.out.println("Your guess is too high, try again.");
+        } else if (user_guess_int < number) {
+          System.out.println("Your guess is too low, try again.");
+        }
 
-      if (user_guess_int > number) {
-        System.out.println("Your guess is too high, try again.");
-      } else if (user_guess_int < number) {
-        System.out.println("Your guess is too low, try again.");
+        System.out.println("Enter your guess:");
+        user_guess = input.nextLine();
+        user_guess_int = Integer.parseInt(user_guess);
+
       }
-
-      System.out.println("Enter your guess:");
-      user_guess = input.nextLine();
-      user_guess_int = Integer.parseInt(user_guess);
-
+      guessIsCorrect = true;
+      System.out.println("Well done, " + name + "! You found my number in " + amountOfGuesses + " tries!");
     }
-
-    System.out.println("Well done, " + name + "! You found my number in " + amountOfGuesses + " tries!");
+   catch (NumberFormatException e) {
+      System.out.println("Not an integer. Try again. Enter your guess: ");
+      
+    }
+  }
   }
 }
