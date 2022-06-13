@@ -1,13 +1,6 @@
 import java.util.Scanner;
 import java.util.Random;
 import java.util.InputMismatchException;
-/** A number guessing game. */
-// users name -> user input
-// guess number -> user input
-// keep track of how many guesses there were
-// do this until user guesses correct number
-// display number of guesses -> output
-
 
 public class Game {
   public static void main(String[] args) {
@@ -29,35 +22,31 @@ public class Game {
 
     boolean guessIsCorrect = false;
 
-    System.out.println("Enter your guess:");
+    // Initial guess
+    String user_guess;
+    int user_guess_int;
 
     while (!guessIsCorrect) {
-    
-    try {
-      String user_guess = input.nextLine();
-      int user_guess_int = Integer.parseInt(user_guess);
-      
-      while (user_guess_int != number) { 
-        amountOfGuesses++;
+      System.out.println("Enter your guess:");
+      amountOfGuesses++;
 
-        if (user_guess_int > number) {
+    try {
+      // while (user_guess_int != number) { 
+      user_guess = input.nextLine();
+      user_guess_int = Integer.parseInt(user_guess);
+    } catch (NumberFormatException e) {
+      System.out.println("Not an integer. Try again.");
+      continue;  
+      } 
+      
+      if (user_guess_int > number) {
           System.out.println("Your guess is too high, try again.");
         } else if (user_guess_int < number) {
           System.out.println("Your guess is too low, try again.");
+        } else {
+          guessIsCorrect = true;
+          System.out.println("Well done, " + name + "! You found my number in " + amountOfGuesses + " tries!");
         }
-
-        System.out.println("Enter your guess:");
-        user_guess = input.nextLine();
-        user_guess_int = Integer.parseInt(user_guess);
-
-      }
-      guessIsCorrect = true;
-      System.out.println("Well done, " + name + "! You found my number in " + amountOfGuesses + " tries!");
-    }
-   catch (NumberFormatException e) {
-      System.out.println("Not an integer. Try again. Enter your guess: ");
-      
     }
   }
   }
-}
